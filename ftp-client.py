@@ -1,10 +1,11 @@
 import socket
 
 HOST = 'localhost'
-PORT = 6666
+PORT = 6668
 
 while True:
     request = input('>')
+
     
     sock = socket.socket()
     sock.connect((HOST, PORT))
@@ -13,5 +14,8 @@ while True:
     
     response = sock.recv(1024).decode()
     print(response)
+    if request == "exit":
+    	sock.close()
+    	break
     
     sock.close()
