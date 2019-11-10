@@ -77,32 +77,32 @@ def process(req, dirname):
            return "File isn't existed!" 
     
     
-    elif req.split(" ")[0] == 'copy.from':
-        req = req.split(" ")
-        if req[1] == 'client':
-            try:
-                with open(os.path.join(dirname, req[2]), "wb") as f:
-                    while True:
-                        data = conn.recv(1024)
-                        if data == b'sent':
-                            break
-                        f.write(data)
-                        return 'File was sent'
-            except IndexError:
-                return 'You did not type filename'
-        
-        elif req[1] == 'server':
-            try:
-                file = os.path.realpath(req[2])
-                with open(file, "rb") as f:
-                    data = f.read(1024)
-                    while data:
-                        conn.send(data)
-                        data = f.read(1024)
-                    conn.send(b'sent')
-                    return 'File was sent'
-            except IndexError:
-                return 'You did not type filename'
+#    elif req.split(" ")[0] == 'copy.from':
+#        req = req.split(" ")
+#        if req[1] == 'client':
+#            try:
+#                with open(os.path.join(dirname, req[2]), "wb") as f:
+#                   while True:
+#                       data = conn.recv(1024)
+#                       if data == b'sent':
+#                            break
+#                        f.write(data)
+#                        return 'File was sent'
+#            except IndexError:
+#                return 'You did not type filename'
+#        
+#        elif req[1] == 'server':
+#            try:
+#                file = os.path.realpath(req[2])
+#                with open(file, "rb") as f:
+#                   data = f.read(1024)
+#                    while data:
+#                       conn.send(data)
+#                       data = f.read(1024)
+#                   conn.send(b'sent')
+#                    return 'File was sent'
+#           except IndexError:
+#               return 'You did not type filename'
     
     else:
         return 'BAD REQUEST!'
