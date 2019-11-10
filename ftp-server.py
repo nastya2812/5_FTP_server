@@ -1,6 +1,7 @@
 import socket
 import os
 import shutil
+import logging
 
 """
 pwd - посмотреть в какой директории находишься ты
@@ -16,6 +17,11 @@ size_path < > - размер папки
 cp_to_cl < > < > -
 cp_to_srv < > - 
 """
+
+log_file = logging.FileHandler('server.log')
+console_out = logging.StreamHandler()
+logging.basicConfig(handlers=(log_file, console_out), format = '[%(asctime)s | %(levelname)s]: %(message)s', datefmt='%m.%d.%Y %H:%M:%S' , level = logging.INFO)
+logging.info('Start')
 
 dirname = os.path.join(os.getcwd(), 'docs')
 
@@ -85,7 +91,7 @@ PORT = 6668
 sock = socket.socket()
 sock.bind(('', PORT))   
 sock.listen()
-print('Прослушиваем порт', PORT)
+logging.info(f"Прослушиваем порт {PORT}")
 
 while True:
     conn, addr = sock.accept()
@@ -134,7 +140,7 @@ while True:
         else:
             dirname = dirname + "/client/"+ login_new_client
         request = conn.recv(1024).decode()
-        print(request)
+        logging.info(request)
         if request == 'exit':
             break
         else:
